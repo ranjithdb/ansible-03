@@ -1,0 +1,25 @@
+- name: Manage Files and Users
+  hosts: linux_mint
+  become: true
+  tasks:
+    - name: Create a new user
+      user:
+        name: devops
+        state: present
+        groups: sudo
+
+    - name: Create a directory
+      file:
+        path: /home/devops/project
+        state: directory
+        owner: devops
+        group: devops
+        mode: '0755'
+
+    - name: Create a file inside the directory
+      copy:
+        content: "Welcome to Ansible File Management"
+        dest: /home/devops/project/info.txt
+        owner: devops
+        group: devops
+        mode: '0644'
